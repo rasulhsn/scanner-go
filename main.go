@@ -13,10 +13,10 @@ type ScannerInfo struct {
 	paths []string
 }
 
-func (s *ScannerInfo) ScanAdminPanels(urlStr string, writeMethod func(string)) {
+func (s *ScannerInfo) ScanAdminPanels(urlStr string, outputMethod func(string)) {
 
 	if !IsValidURL(urlStr) {
-		writeMethod("url is invalid!")
+		outputMethod("url is invalid!")
 	}
 
 	for _, path := range s.paths {
@@ -24,20 +24,20 @@ func (s *ScannerInfo) ScanAdminPanels(urlStr string, writeMethod func(string)) {
 
 		response, err := http.Get(fullURL)
 		if err != nil {
-			writeMethod("[-] " + fullURL + "\n")
+			outputMethod("[-] " + fullURL + "\n")
 			continue
 		}
 		defer response.Body.Close()
 
 		statusCode := response.StatusCode
 		if statusCode == 200 {
-			writeMethod("[+] Admin panel found: " + fullURL + "\n")
+			outputMethod("[+] Admin panel found: " + fullURL + "\n")
 		} else if statusCode == 404 {
-			writeMethod("[-] " + fullURL + "\n")
+			outputMethod("[-] " + fullURL + "\n")
 		} else if statusCode == 302 {
-			writeMethod("[+] Potential EAR vulnerability found: " + fullURL + "\n")
+			outputMethod("[+] Potential EAR vulnerability found: " + fullURL + "\n")
 		} else {
-			writeMethod("[-] " + fullURL + "\n")
+			outputMethod("[-] " + fullURL + "\n")
 		}
 	}
 
