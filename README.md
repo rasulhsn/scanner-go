@@ -1,2 +1,2 @@
 # scanner-go
-Admin panels scanner, purpose of projects is experiments
+Admin panel scanner; the purpose of the project is experimentation.
